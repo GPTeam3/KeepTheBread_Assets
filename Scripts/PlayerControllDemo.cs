@@ -23,7 +23,13 @@ namespace PuxxeStudio
 
 		//------현재 플레이어 상태
 
-		public bool isRunning = false; //플레이어가 걷는중인지
+		public bool isWalking = false; //플레이어가 걷는중인지
+		public bool isWalking_LR = false; //플레이어가 좌우로 걷는중인지
+
+
+		public bool isRunning = false; // 플레이어가 뛰는 중인지
+
+
 		public bool isGrounded = false; //플레이어가 땅인지
 		bool isFalling = false; //플레이어가 떨어지는 중인지
 		bool isJumping = false; //플레이어가 점프중인지
@@ -31,6 +37,9 @@ namespace PuxxeStudio
 		bool isDoubleJumping = false; //플레이어가 더블점프 중인지
 
 
+		int[] walkAnimation = { 21, 22, 23, 24 };
+		int[] runAnimation = { 31, 32, 33, 34 };
+		public int[] currentMoveAnimation = new int[4];
 
 		//------에니메이션
 
@@ -1142,14 +1151,15 @@ namespace PuxxeStudio
 
 		void Start()
 		{
+			currentMoveAnimation = walkAnimation;
 			UpdateAnimationAction();
 		}
 
 		void Update()
 		{
 
-			UpdateAnimationAction();
 
+			UpdateAnimationAction();
 
 			if (Input.GetMouseButton(0))
 			{
@@ -1158,61 +1168,103 @@ namespace PuxxeStudio
 			CameraRotation();
 			Move();
 
-
-			//-----직진
-			if (Input.GetKeyDown("w"))
+			if (Input.GetKey(KeyCode.LeftShift))
 			{
 				isRunning = true;
 
-				SetActionInt(21);
+				if (currentMoveAnimation != runAnimation)
+				{
+					moveSpeed = moveSpeed * 2;
+					currentMoveAnimation = runAnimation;
+				}
+			}
+			else if (Input.GetKeyUp(KeyCode.LeftShift))
+			{
+
+				isRunning = false;
+
+				if (currentMoveAnimation == runAnimation)
+				{
+					moveSpeed = moveSpeed / 2;
+					currentMoveAnimation = walkAnimation;
+				}
+			}
+
+			//-----직진
+			if (Input.GetKey("w"))
+			{
+				isWalking = true;
+				if (actionID != currentMoveAnimation[0] && !isFalling && !isWalking_LR)
+				{
+					actionID = currentMoveAnimation[0];
+					SetActionInt(currentMoveAnimation[0]);
+
+				}
 			}
 			else if (Input.GetKeyUp("w"))
 			{
-				isRunning = false;
-
-				ReturnToAction(A_011_IDLE_1, 0.0f);
-			}
-			//-----오른쪽
-			if (Input.GetKeyDown("d"))
-			{
-				isRunning = true;
-
-				SetActionInt(23);
-			}
-			else if (Input.GetKeyUp("d"))
-			{
-				isRunning = false;
-
-				ReturnToAction(A_011_IDLE_1, 0.0f);
-			}
-
-			//------왼쪽
-			if (Input.GetKeyDown("a"))
-			{
-				isRunning = true;
-
-				SetActionInt(24);
-			}
-			else if (Input.GetKeyUp("a"))
-			{
-				isRunning = false;
-
+				isWalking = false;
+				actionID = (int)actions[A_011_IDLE_1];
 				ReturnToAction(A_011_IDLE_1, 0.0f);
 			}
 
 			//-----뒤로
-			if (Input.GetKeyDown("s"))
+			if (Input.GetKey("s"))
 			{
-				isRunning = true;
+				isWalking = true;
+				if (actionID != currentMoveAnimation[1] && !isFalling && !isWalking_LR)
+				{
+					actionID = currentMoveAnimation[1];
+					SetActionInt(currentMoveAnimation[1]);
 
-				SetActionInt(22);
+				}
 			}
 			else if (Input.GetKeyUp("s"))
 			{
-				isRunning = false;
-
+				isWalking = false;
 				ReturnToAction(A_011_IDLE_1, 0.0f);
 			}
+
+
+			//-----오른쪽
+			if (Input.GetKey("d"))
+			{
+				isWalking = true;
+				isWalking_LR = true;
+				if (actionID != currentMoveAnimation[2] && !isFalling)
+				{
+					actionID = currentMoveAnimation[2];
+					SetActionInt(currentMoveAnimation[2]);
+
+				}
+			}
+			else if (Input.GetKeyUp("d"))
+			{
+				isWalking = false;
+				isWalking_LR = false;
+				ReturnToAction(A_011_IDLE_1, 0.0f);
+			}
+
+			//------왼쪽
+			if (Input.GetKey("a"))
+			{
+				isWalking = true;
+				isWalking_LR = true;
+				if (actionID != currentMoveAnimation[3] && !isFalling)
+				{
+					actionID = currentMoveAnimation[3];
+					SetActionInt(currentMoveAnimation[3]);
+
+				}
+			}
+			else if (Input.GetKeyUp("a"))
+			{
+				isWalking = false;
+				isWalking_LR = false;
+				ReturnToAction(A_011_IDLE_1, 0.0f);
+			}
+
+
 
 			if (Input.GetKeyDown(KeyCode.Space))
 			{ //스페이스 키를 눌렀을 경우 -> 점프
@@ -1352,8 +1404,6 @@ namespace PuxxeStudio
 		}
 		private void UpdateAnimationAction()
 		{
-
-
 			if (rigidbody == null)
 			{
 				Debug.LogWarning("rigidbody NOT FOUND!");
@@ -1470,11 +1520,12 @@ namespace PuxxeStudio
 		}
 		private void OnCollisionEnter(Collision collision)
 		{
-			Debug.Log("충돌" + (collision.transform.CompareTag("Ground")));
+			//플레이어가 땅을 밟고 있을 때
 			if (collision.transform.CompareTag("Ground"))
 			{
 				isGrounded = true;
 
+				//점프에서 착지하는 과정
 				if (actionID == (int)actions[A_071_LAND_1])
 				{
 					SetActionName(A_071_LAND_1);
