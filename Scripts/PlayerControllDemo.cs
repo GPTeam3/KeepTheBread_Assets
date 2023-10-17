@@ -23,8 +23,16 @@ namespace PuxxeStudio
 		Rigidbody rigidbody;
 		public GameObject CheckGround;
 
-		//------현재 플레이어 상태
+		public static float health;
 
+		//------ 달리기 구현
+		//1초내에 w키를 2번 누르면 달리기.
+		private float timeDoubleClick = 1f;
+		private float ClickStart;
+
+		public bool EnableRunning = true;
+
+		//------현재 플레이어 상태           		
 		public bool isWalking = false; //플레이어가 걷는중인지
 		public bool isWalking_LR = false; //플레이어가 좌우로 걷는중인지
 
@@ -32,7 +40,7 @@ namespace PuxxeStudio
 		public bool isRunning = false; // 플레이어가 뛰는 중인지
 
 
-		public bool isGrounded = false; //플레이어가 땅인지
+		public bool isGrounded = false; //플레이어가 땅 위에 있는지
 		bool isFalling = false; //플레이어가 떨어지는 중인지
 		bool isJumping = false; //플레이어가 점프중인지
 		bool EnableDoubleJumping = true; //플레이어가 더블점프가 가능한지
@@ -40,7 +48,7 @@ namespace PuxxeStudio
 
 
 		int[] walkAnimation = { 21, 22, 23, 24 };
-		int[] runAnimation = { 31, 32, 33, 34 };
+		int[] runAnimation = { 31, 22, 23, 24 };
 		public int[] currentMoveAnimation = new int[4];
 
 		//------에니메이션
@@ -1153,46 +1161,79 @@ namespace PuxxeStudio
 
 		void Start()
 		{
+			health = 1f;
 			currentMoveAnimation = walkAnimation;
 			UpdateAnimationAction();
 		}
 
 		void Update()
 		{
-
+			// Debug.Log(health);
 
 			UpdateAnimationAction();
-
 			if (Input.GetMouseButton(0))
 			{
 				CharacterRotation();
 			}
 			CameraRotation();
-			Move();
 
-			if (Input.GetKey(KeyCode.LeftShift))
+
+			if (health < 1)
 			{
-				isRunning = true;
+				health += 0.0005f;
+			}
 
+			if (health < 0.2f)
+			{
+				EnableRunning = false;
+				isRunning = false;
+			}
+			else
+			{
+				EnableRunning = true;
+			}
+
+
+			if (isRunning)
+			{
+				health -= 0.001f;
 				if (currentMoveAnimation != runAnimation)
 				{
 					moveSpeed = moveSpeed * 2;
 					currentMoveAnimation = runAnimation;
 				}
 			}
-			else if (Input.GetKeyUp(KeyCode.LeftShift))
+			else
 			{
-
-				isRunning = false;
-
-				if (currentMoveAnimation == runAnimation)
+				if (currentMoveAnimation != walkAnimation)
 				{
 					moveSpeed = moveSpeed / 2;
 					currentMoveAnimation = walkAnimation;
 				}
 			}
 
+			Move();
+
 			//-----직진
+			if (Input.GetKeyDown("w"))
+			{
+				if (EnableRunning)
+				{
+					if (Time.time - ClickStart < timeDoubleClick && Time.time - ClickStart > 0.1f)
+					{
+						if (!isRunning)
+						{
+							isRunning = true;
+						}
+					}
+					else
+					{
+						ClickStart = Time.time;
+					}
+				}
+
+			}
+
 			if (Input.GetKey("w"))
 			{
 				isWalking = true;
@@ -1202,13 +1243,15 @@ namespace PuxxeStudio
 					SetActionInt(currentMoveAnimation[0]);
 
 				}
+
 			}
 			else if (Input.GetKeyUp("w"))
 			{
 				isWalking = false;
-				actionID = (int)actions[A_011_IDLE_1];
-				ReturnToAction(A_011_IDLE_1, 0.0f);
+				isRunning = false;
 			}
+
+
 
 			//-----뒤로
 			if (Input.GetKey("s"))
@@ -1224,8 +1267,9 @@ namespace PuxxeStudio
 			else if (Input.GetKeyUp("s"))
 			{
 				isWalking = false;
-				ReturnToAction(A_011_IDLE_1, 0.0f);
 			}
+
+
 
 
 			//-----오른쪽
@@ -1240,13 +1284,6 @@ namespace PuxxeStudio
 
 				}
 			}
-			else if (Input.GetKeyUp("d"))
-			{
-				isWalking = false;
-				isWalking_LR = false;
-				ReturnToAction(A_011_IDLE_1, 0.0f);
-			}
-
 			//------왼쪽
 			if (Input.GetKey("a"))
 			{
@@ -1259,19 +1296,29 @@ namespace PuxxeStudio
 
 				}
 			}
-			else if (Input.GetKeyUp("a"))
+
+			if (Input.GetKeyUp("d") || Input.GetKeyUp("a"))
 			{
 				isWalking = false;
 				isWalking_LR = false;
-				ReturnToAction(A_011_IDLE_1, 0.0f);
 			}
 
 
+			if (!isWalking && !isFalling)
+			{
+				if (actionID != (int)actions[A_011_IDLE_1])
+				{
+					actionID = (int)actions[A_011_IDLE_1];
+					SetActionInt(actionID);
+
+				}
+			}
 
 			if (Input.GetKeyDown(KeyCode.Space))
 			{ //스페이스 키를 눌렀을 경우 -> 점프
 				Jump();
 			}
+
 		}
 
 
@@ -1413,18 +1460,21 @@ namespace PuxxeStudio
 				return;
 			}
 
+
+
+
 			if (rigidbody.velocity.y > .1f)
 			{
 				if (actionID != (int)actions[A_041_JUMP_1] && isDoubleJumping == false)
 				{
-					Debug.Log("1");
+					// Debug.Log("1");
 					actionID = (int)actions[A_041_JUMP_1];
 					SetActionInt(41);
 
 				}
 				if (actionID != (int)actions[A_051_JUMP_SPIN_1] && isDoubleJumping == true)
 				{
-					Debug.Log("2");
+					// Debug.Log("2");
 					actionID = (int)actions[A_051_JUMP_SPIN_1];
 					SetActionInt(51);
 				}
@@ -1434,7 +1484,7 @@ namespace PuxxeStudio
 			{
 				if (actionID != (int)actions[A_061_FALL_1])
 				{
-					Debug.Log("3");
+					// Debug.Log("3");
 					SetActionInt(61);
 					isJumping = false;
 					isFalling = true;
@@ -1446,7 +1496,7 @@ namespace PuxxeStudio
 
 				if (actionID != (int)actions[A_071_LAND_1] && actionID == (int)actions[A_061_FALL_1])
 				{
-					Debug.Log("4");
+					// Debug.Log("4");
 					SetActionInt(71);
 					isJumping = false;
 					isFalling = false;
@@ -1455,7 +1505,7 @@ namespace PuxxeStudio
 
 				if (transform.position.y <= -10)
 				{
-					Debug.Log("5");
+					// Debug.Log("5");
 					RestarLevel();
 				}
 			}
