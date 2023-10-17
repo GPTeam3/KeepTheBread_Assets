@@ -7,7 +7,7 @@ namespace PuxxeStudio
 	using UnityEngine.SceneManagement;
 	using System;
 
-	public class PlayerControllDemo : MonoBehaviour
+	public class PlayerControlDemo : MonoBehaviour
 	{
 		public float lookSensitivity;
 		public float cameraRotationLimit;
