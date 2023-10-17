@@ -14,6 +14,8 @@ namespace PuxxeStudio
 		private float currentCameraRotationX;
 
 		public Camera theCamera;
+		public Camera minimapCamera;
+		public Vector3 offset;
 
 		public float jumpForce;
 		public float moveSpeed = 8f;
@@ -780,7 +782,7 @@ namespace PuxxeStudio
 		int backActionID = 11;
 		private void Awake()
 		{
-			gameObject.transform.position = new Vector3(0, 5, 0);
+			gameObject.transform.position = new Vector3(-55, 5, -45);
 			FindComponents();
 			actions[A_001_POSE_1] = A_001_POSE_1_ID;
 			actions[A_002_POSE_2] = A_002_POSE_2_ID;
@@ -1299,6 +1301,7 @@ namespace PuxxeStudio
 			Vector3 _velocity = (_moveHorizontal + _moveVertical).normalized * moveSpeed;
 
 			rigidbody.MovePosition(transform.position + _velocity * Time.deltaTime);
+			minimapCamera.transform.position = transform.position + offset;
 		}
 
 
