@@ -1321,7 +1321,6 @@ namespace PuxxeStudio
 
 		}
 
-
 		private void CharacterRotation()  // 좌우 캐릭터 회전
 		{
 			float _yRotation = Input.GetAxisRaw("Mouse X");
