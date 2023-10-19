@@ -25,9 +25,6 @@ namespace PuxxeStudio
 
 		public static float health;
 
-		public GameObject bread;
-		private bool mybread = false;
-
 		//------ 달리기 구현
 		//1초내에 w키를 2번 누르면 달리기.
 		private float timeDoubleClick = 1f;
@@ -1323,64 +1320,6 @@ namespace PuxxeStudio
 			}
 
 		}
-
-		private void    OnTriggerEnter(Collider other)
-		{
-			if (other.tag == "Bread")
-			{
-				if (mybread == false)
-				{
-					mybread = true;
-					bread.SetActive(true);
-				}
-			}
-
-			if (other.tag == "mc")
-			{
-				if (mybread == true)
-				{
-					mybread = false;
-					bread.SetActive(false);
-				}
-			}
-
-			if (other.tag == "wh")
-			{
-				if (mybread == true)
-				{
-					mybread = false;
-					bread.SetActive(false);
-				}
-			}
-
-			if (other.tag == "mh")
-			{
-				if (mybread == true)
-				{
-					mybread = false;
-					bread.SetActive(false);
-				}
-			}
-
-			if (other.tag == "bs")
-			{
-				if (mybread == true)
-				{
-					mybread = false;
-					bread.SetActive(false);
-				}
-			}
-
-			if (other.tag == "dg")
-			{
-				if (mybread == true)
-				{
-					mybread = false;
-					bread.SetActive(false);
-				}
-			}
-		}
-
 
 		private void CharacterRotation()  // 좌우 캐릭터 회전
 		{

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+// using UnityEngine.SceneManagement;
 // using System;
 
 public class RandomCustomer : MonoBehaviour
@@ -22,6 +24,14 @@ public class RandomCustomer : MonoBehaviour
     public int  num3;
     public int  num4;
     public int  num5;
+
+    public GameObject bread;
+	public bool mybread = false;
+	public bool[] customer_bread;
+    public GameObject[] Delivery_bread;
+    public int count = 0;
+
+    public GameObject GameClear;
 
     // Start is called before the first frame update
     void Start()
@@ -56,11 +66,114 @@ public class RandomCustomer : MonoBehaviour
         DGCustomer[num5].customer[1].SetActive(true);
         DGCustomer[num5].customer[1].tag = "dg";
         DGCustomer[num5].customer[2].SetActive(true);
+
+        customer_bread[0] = false;
+		customer_bread[1] = false;
+		customer_bread[2] = false;
+		customer_bread[3] = false;
+		customer_bread[4] = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (count == 5)
+        {
+            GameClear.SetActive(true);
+            // IsPause = true;
+            Time.timeScale = 0;
+        }
     }
+
+    private void    OnTriggerEnter(Collider other)
+		{
+			if (other.tag == "Bread")
+			{
+				if (mybread == false)
+				{
+					mybread = true;
+					bread.SetActive(true);
+				}
+			}
+
+			if (other.tag == "mc")
+			{
+				if (mybread == true)
+				{
+					mybread = false;
+					bread.SetActive(false);
+                    customer_bread[0] = true;
+                    count++;
+                    MCCustomer[num1].customer[0].SetActive(true);
+                    MCCustomer[num1].customer[1].SetActive(false);
+                    MCCustomer[num1].customer[1].tag = "Untagged";
+                    MCCustomer[num1].customer[2].SetActive(false);
+                    Delivery_bread[0].SetActive(false);
+				}
+			}
+
+			if (other.tag == "wh")
+			{
+				if (mybread == true)
+				{
+					mybread = false;
+					bread.SetActive(false);
+                    customer_bread[1] = true;
+                    count++;
+                    WHCustomer[num2].customer[0].SetActive(true);
+                    WHCustomer[num2].customer[1].SetActive(false);
+                    WHCustomer[num2].customer[1].tag = "Untagged";
+                    WHCustomer[num2].customer[2].SetActive(false);
+                    Delivery_bread[1].SetActive(false);
+				}
+			}
+
+			if (other.tag == "mh")
+			{
+				if (mybread == true)
+				{
+					mybread = false;
+					bread.SetActive(false);
+                    customer_bread[2] = true;
+                    count++;
+                    MHCustomer[num3].customer[0].SetActive(true);
+                    MHCustomer[num3].customer[1].SetActive(false);
+                    MHCustomer[num3].customer[1].tag = "Untagged";
+                    MHCustomer[num3].customer[2].SetActive(false);
+                    Delivery_bread[2].SetActive(false);
+				}
+			}
+
+			if (other.tag == "bs")
+			{
+				if (mybread == true)
+				{
+					mybread = false;
+					bread.SetActive(false);
+                    customer_bread[3] = true;
+                    count++;
+                    BSCustomer[num4].customer[0].SetActive(true);
+                    BSCustomer[num4].customer[1].SetActive(false);
+                    BSCustomer[num4].customer[1].tag = "Untagged";
+                    BSCustomer[num4].customer[2].SetActive(false);
+                    Delivery_bread[3].SetActive(false);
+				}
+			}
+
+			if (other.tag == "dg")
+			{
+				if (mybread == true)
+				{
+					mybread = false;
+					bread.SetActive(false);
+                    customer_bread[4] = true;
+                    count++;
+                    DGCustomer[num5].customer[0].SetActive(true);
+                    DGCustomer[num5].customer[1].SetActive(false);
+                    DGCustomer[num5].customer[1].tag = "Untagged";
+                    DGCustomer[num5].customer[2].SetActive(false);
+                    Delivery_bread[4].SetActive(false);
+				}
+			}
+		}
 }
