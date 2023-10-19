@@ -19,8 +19,6 @@ public class RandomCustomer : MonoBehaviour
 
     RandomNum randomscript;
 
-    // public GameObject[,] array = new GameObject[5, 3];
-
     // Start is called before the first frame update
     void Start()
     {
