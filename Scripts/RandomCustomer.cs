@@ -85,6 +85,12 @@ public class RandomCustomer : MonoBehaviour
         }
     }
 
+    public void SetBreadState(bool state)
+    {
+        mybread = state;
+        bread.SetActive(state);
+    }
+
     private void    OnTriggerEnter(Collider other)
 		{
 			if (other.tag == "Bread")
