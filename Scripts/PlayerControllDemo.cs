@@ -791,7 +791,7 @@ namespace PuxxeStudio
 		int backActionID = 11;
 		private void Awake()
 		{
-			gameObject.transform.position = new Vector3(-55, 5, -45);
+			gameObject.transform.position = new Vector3(-57, 5, -45);
 			FindComponents();
 			actions[A_001_POSE_1] = A_001_POSE_1_ID;
 			actions[A_002_POSE_2] = A_002_POSE_2_ID;
