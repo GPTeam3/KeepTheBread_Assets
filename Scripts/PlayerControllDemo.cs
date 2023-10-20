@@ -15,6 +15,7 @@ namespace PuxxeStudio
 
 		public Camera theCamera;
 		public Camera minimapCamera;
+		public Camera popupCamera;
 		public Vector3 offset;
 
 		public float jumpForce;
@@ -1348,6 +1349,7 @@ namespace PuxxeStudio
 
 			rigidbody.MovePosition(transform.position + _velocity * Time.deltaTime);
 			minimapCamera.transform.position = transform.position + offset;
+			popupCamera.transform.position = transform.position + offset;
 		}
 
 
