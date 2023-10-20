@@ -33,7 +33,7 @@ public class EnemyController : MonoBehaviour
         {
             float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-            if (distanceToPlayer <= detectionRange)
+            if (distanceToPlayer <= detectionRange && randomCustomerScript.mybread == true)
             {
                 // 플레이어와의 거리가 7 이하일 때 계속 추적
                 isChasing = true;
@@ -42,7 +42,12 @@ public class EnemyController : MonoBehaviour
                 Vector3 lookDirection = (player.position - transform.position).normalized;
                 transform.forward = lookDirection;
             }
-
+            else
+            {
+                Vector3 moveDirection = (randomRoamingPosition - transform.position).normalized;
+                transform.forward = moveDirection;
+                Roam();
+            }
 
             if (isChasing)
             {
