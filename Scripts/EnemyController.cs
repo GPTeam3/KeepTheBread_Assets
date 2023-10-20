@@ -16,11 +16,15 @@ public class EnemyController : MonoBehaviour
     private Vector3 randomRoamingPosition; // 로밍 위치를 저장하기 위한 변수
     private float roamingTimer = 0.0f;    // 로밍 타이머
 
+    private RandomCustomer randomCustomerScript; // RandomCustomer 스크립트 참조
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         startPosition = transform.position;
         SetRandomRoamingPosition();
+        // RandomCustomer 스크립트 참조 설정
+        randomCustomerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<RandomCustomer>();
     }
 
     void Update()
@@ -62,6 +66,14 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player") // Assuming the player has the "Player" tag
+        {
+            randomCustomerScript.mybread = false;
+            randomCustomerScript.bread.SetActive(false);
+        }
+    }
 
 
     void SetRandomRoamingPosition()
