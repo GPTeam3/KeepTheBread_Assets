@@ -93,6 +93,7 @@ public class RandomCustomer : MonoBehaviour
 
     private void    OnTriggerEnter(Collider other)
 		{
+            Debug.Log(other.name);
 			if (other.tag == "Bread")
 			{
 				if (mybread == false)
