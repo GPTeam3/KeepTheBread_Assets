@@ -323,24 +323,6 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  Level1_star:
-  - {fileID: 66439022}
-  - {fileID: 1281210136}
-  - {fileID: 1131539243}
-  Level2_star:
-  - {fileID: 8819687962015878863}
-  - {fileID: 8819687963052039110}
-  - {fileID: 8819687962443485834}
-  Level3_star:
-  - {fileID: 291839578}
-  - {fileID: 617439479}
-  - {fileID: 412991297}
-  Level_2: 0
-  Level_3: 0
-  Button_2: {fileID: 8819687962539608917}
-  Button_3: {fileID: 1830277675}
-  Lock_2: {fileID: 8819687962903771420}
-  Lock_3: {fileID: 2011047374}
 --- !u!1 &290668283
 GameObject:
   m_ObjectHideFlags: 0
@@ -1783,6 +1765,7 @@ GameObject:
   - component: {fileID: 1905582389}
   - component: {fileID: 1905582388}
   - component: {fileID: 1905582387}
+  - component: {fileID: 1905582391}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1881,6 +1864,36 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1905582391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1905582386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5455f0c1d69f0480d84141fb205e201a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Level1_star:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  Level2_star:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  Level3_star:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  Level_2: 0
+  Level_3: 0
+  Button_2: {fileID: 0}
+  Button_3: {fileID: 0}
+  Lock_2: {fileID: 0}
+  Lock_3: {fileID: 0}
 --- !u!1 &2011047374
 GameObject:
   m_ObjectHideFlags: 0

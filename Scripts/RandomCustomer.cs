@@ -77,9 +77,11 @@ public class RandomCustomer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (count == 5)
+        if (count == 1)
         {
             GameClear.SetActive(true);
+            if (GameObject.Find("GameScore").GetComponent<GameScore>().time[0] < GameObject.Find("Canvas").GetComponent<Timer>().time)
+                GameObject.Find("GameScore").GetComponent<GameScore>().time[0] = GameObject.Find("Canvas").GetComponent<Timer>().time;
             // IsPause = true;
             Time.timeScale = 0;
         }
