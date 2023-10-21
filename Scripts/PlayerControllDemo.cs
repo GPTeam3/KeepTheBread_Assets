@@ -1167,6 +1167,7 @@ namespace PuxxeStudio
 			health = 1f;
 			currentMoveAnimation = walkAnimation;
 			UpdateAnimationAction();
+			Debug.Log(Microphone.devices);
 		}
 
 		void Update()

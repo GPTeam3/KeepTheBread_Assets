@@ -6,19 +6,24 @@ public class PlayerDetector : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy"))
+        if (other.CompareTag("Player"))
         {
-            // 적(Enemy)가 감지되면 적에게 알리기
+            // 플레이어가 감지되면 적(Enemy)에게 알리기
             EnemyController enemy = other.GetComponent<EnemyController>();
             if (enemy != null)
             {
                 enemy.enabled = true;
             }
         }
-        else
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
         {
+            // 플레이어가 감지 범위에서 나가면 적(Enemy)에게 알리기
             EnemyController enemy = other.GetComponent<EnemyController>();
-            if (enemy = null)
+            if (enemy != null)
             {
                 enemy.enabled = false;
             }
