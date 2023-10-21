@@ -324,17 +324,17 @@ MonoBehaviour:
   - 0
   - 0
   Level1_star:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 66439022}
+  - {fileID: 1281210136}
+  - {fileID: 1131539243}
   Level2_star:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8819687962015878863}
+  - {fileID: 8819687963052039110}
+  - {fileID: 8819687962443485834}
   Level3_star:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 291839578}
+  - {fileID: 617439479}
+  - {fileID: 412991297}
   Level_2: 0
   Level_3: 0
   Button_2: {fileID: 8819687962539608917}
