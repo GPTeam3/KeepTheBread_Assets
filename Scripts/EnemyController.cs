@@ -23,8 +23,10 @@ public class EnemyController : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
         startPosition = transform.position;
         SetRandomRoamingPosition();
-        // RandomCustomer 스크립트 참조 설정
-        randomCustomerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<RandomCustomer>();
+
+        // BreadCheck 오브젝트를 찾아서 그 아래에 있는 RandomCustomer 스크립트를 가져오도록 수정
+        GameObject breadCheckObject = player.Find("BreadCheck").gameObject;
+        randomCustomerScript = breadCheckObject.GetComponent<RandomCustomer>();
     }
 
     void Update()
