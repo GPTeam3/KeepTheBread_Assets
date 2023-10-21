@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     public Transform player;             // 플레이어를 따라가기 위한 플레이어의 Transform
+    public Transform grandma;            // 비둘기 할머니를 따라가기 위한 Grandma의 Transform
     public float moveSpeed = 3.0f;       // 이동 속도
     public float detectionRange = 7.0f;  // 플레이어 감지 범위
     public float roamingRadius = 20.0f;  // 로밍 반경
@@ -12,6 +13,7 @@ public class EnemyController : MonoBehaviour
 
     private Vector3 startPosition;       // 초기 위치
     private bool isChasing = false;     // 플레이어를 추격 중인지 여부
+    private bool grandmaChasing = false;  // grandma를 추격 중인지 여부
 
     private Vector3 randomRoamingPosition; // 로밍 위치를 저장하기 위한 변수
     private float roamingTimer = 0.0f;    // 로밍 타이머
@@ -21,6 +23,7 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        grandma = GameObject.FindGameObjectWithTag("Grandma").transform;
         startPosition = transform.position;
         SetRandomRoamingPosition();
 
@@ -31,36 +34,71 @@ public class EnemyController : MonoBehaviour
 
     void Update()
     {
+        float distanceToGrandma = Vector3.Distance(transform.position, grandma.position);
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+
         if (enabled) // Enemy가 활성화된 경우에만 실행
         {
-            float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+            // Player와 Grandma의 위치 관련 거리 계산
+            bool playerInRange = distanceToPlayer <= detectionRange && randomCustomerScript.mybread == true;
+            bool grandmaInRange = distanceToGrandma <= detectionRange;
 
-            if (distanceToPlayer <= detectionRange && randomCustomerScript.mybread == true)
+            if (playerInRange && !grandmaInRange)
             {
-                // 플레이어와의 거리가 7 이하일 때 계속 추적
+                // Player만 감지되었을 때 플레이어 추적
                 isChasing = true;
+                grandmaChasing = false;
 
-                // 플레이어 방향을 바라보도록 회전
+                // 바라보는 로직
+                Vector3 lookDirection = (player.position - transform.position).normalized;
+                transform.forward = lookDirection;
+            }
+            else if (!playerInRange && grandmaInRange)
+            {
+                // Grandma만 감지되었을 때 Grandma 추적
+                isChasing = false;
+                grandmaChasing = true;
+
+                Vector3 lookDirection = (grandma.position - transform.position).normalized;
+                transform.forward = lookDirection;
+            }
+            else if (playerInRange && grandmaInRange)
+            {
+                // Player와 Grandma 모두 감지되었을 때 Player 추적
+                isChasing = true;
+                grandmaChasing = false;
+
                 Vector3 lookDirection = (player.position - transform.position).normalized;
                 transform.forward = lookDirection;
             }
             else
             {
+                // 모두 감지 범위에 들어오지 않을 때 랜덤 로밍
+                isChasing = false;
+                grandmaChasing = false;
                 Vector3 moveDirection = (randomRoamingPosition - transform.position).normalized;
                 transform.forward = moveDirection;
                 Roam();
             }
 
-            if (isChasing)
+            if (isChasing) // 쫓아가는 로직
             {
-                Vector3 moveDirection = (player.position - transform.position).normalized;
-                transform.position += moveDirection * moveSpeed * Time.deltaTime;
+                PlayerChasing();
 
                 if (distanceToPlayer >= detectionRange)
                 {
                     isChasing = false;
                     SetRandomRoamingPosition();
-                    // 로밍 위치가 아직 설정되지 않았으면 초기화
+                }
+            }
+            else if (grandmaChasing)
+            {
+                GrandmaChasing();
+
+                if (distanceToGrandma >= detectionRange)
+                {
+                    grandmaChasing = false;
+                    SetRandomRoamingPosition();
                 }
             }
             else
@@ -73,6 +111,24 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    void PlayerChasing()
+    {
+        Vector3 moveDirection = (player.position - transform.position).normalized;
+        transform.position += moveDirection * moveSpeed * Time.deltaTime;
+    }
+
+    void GrandmaChasing()
+    {
+        float distanceToGrandma = Vector3.Distance(transform.position, grandma.position);
+
+        // Grandma와의 거리가 일정 값 이상인 경우에만 Grandma를 추적
+        if (distanceToGrandma > 0.5f)
+        {
+            Vector3 moveDirection = (grandma.position - transform.position).normalized;
+            transform.position += moveDirection * moveSpeed * Time.deltaTime;
+        }
+    }
+
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player") // Assuming the player has the "Player" tag
@@ -81,7 +137,6 @@ public class EnemyController : MonoBehaviour
             randomCustomerScript.bread.SetActive(false);
         }
     }
-
 
     void SetRandomRoamingPosition()
     {
