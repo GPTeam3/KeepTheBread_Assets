@@ -13,7 +13,9 @@ namespace PuxxeStudio
 		public float cameraRotationLimit;
 		private float currentCameraRotationX;
 
-		public Camera theCamera;
+		public GameObject TheCamera;
+		public Camera walkCamera;
+		public Camera runCamera;
 		public Camera minimapCamera;
 		public Camera popupCamera;
 		public Vector3 offset;
@@ -1165,6 +1167,7 @@ namespace PuxxeStudio
 			health = 1f;
 			currentMoveAnimation = walkAnimation;
 			UpdateAnimationAction();
+			Debug.Log(Microphone.devices);
 		}
 
 		void Update()
@@ -1202,6 +1205,10 @@ namespace PuxxeStudio
 				{
 					moveSpeed = moveSpeed * 2;
 					currentMoveAnimation = runAnimation;
+					// theCamera.transform.Translate(0, 0, 10);
+
+					walkCamera.enabled = false;
+					runCamera.enabled = true;
 				}
 			}
 			else
@@ -1210,6 +1217,10 @@ namespace PuxxeStudio
 				{
 					moveSpeed = moveSpeed / 2;
 					currentMoveAnimation = walkAnimation;
+					// theCamera.transform.Translate(0, 0, -10);
+
+					walkCamera.enabled = true;
+					runCamera.enabled = false;
 				}
 			}
 
@@ -1336,7 +1347,8 @@ namespace PuxxeStudio
 			currentCameraRotationX -= _cameraRotationX;
 			currentCameraRotationX = Mathf.Clamp(currentCameraRotationX, -cameraRotationLimit, cameraRotationLimit);
 
-			theCamera.transform.localEulerAngles = new Vector3(currentCameraRotationX + 15, 0f, 0f);
+			TheCamera.transform.localEulerAngles = new Vector3(currentCameraRotationX + 15, 0f, 0f);
+
 		}
 		private void Move() // 캐릭터 움직이기
 		{
@@ -1492,7 +1504,7 @@ namespace PuxxeStudio
 					isDoubleJumping = false;
 				}
 			}
-			else if (rigidbody.velocity.y == 0)
+			else if (rigidbody.velocity.y < 0.3f && rigidbody.velocity.y > -0.3f)
 			{
 
 				if (actionID != (int)actions[A_071_LAND_1] && actionID == (int)actions[A_061_FALL_1])

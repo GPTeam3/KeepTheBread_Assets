@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class Timer : MonoBehaviour
 {
     public Text timer;
-    private float time;
+    public float time;
     private int min;
     private int sec;
 
@@ -17,7 +17,7 @@ public class Timer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        time = 55f;
+        time = 300f;
         IsPause = false;
         Time.timeScale = 1;
     }

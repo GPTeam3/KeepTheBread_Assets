@@ -16,11 +16,17 @@ public class EnemyController : MonoBehaviour
     private Vector3 randomRoamingPosition; // 로밍 위치를 저장하기 위한 변수
     private float roamingTimer = 0.0f;    // 로밍 타이머
 
+    private RandomCustomer randomCustomerScript; // RandomCustomer 스크립트 참조
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         startPosition = transform.position;
         SetRandomRoamingPosition();
+
+        // BreadCheck 오브젝트를 찾아서 그 아래에 있는 RandomCustomer 스크립트를 가져오도록 수정
+        GameObject breadCheckObject = player.Find("BreadCheck").gameObject;
+        randomCustomerScript = breadCheckObject.GetComponent<RandomCustomer>();
     }
 
     void Update()
@@ -29,7 +35,7 @@ public class EnemyController : MonoBehaviour
         {
             float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-            if (distanceToPlayer <= detectionRange)
+            if (distanceToPlayer <= detectionRange && randomCustomerScript.mybread == true)
             {
                 // 플레이어와의 거리가 7 이하일 때 계속 추적
                 isChasing = true;
@@ -38,7 +44,12 @@ public class EnemyController : MonoBehaviour
                 Vector3 lookDirection = (player.position - transform.position).normalized;
                 transform.forward = lookDirection;
             }
-
+            else
+            {
+                Vector3 moveDirection = (randomRoamingPosition - transform.position).normalized;
+                transform.forward = moveDirection;
+                Roam();
+            }
 
             if (isChasing)
             {
@@ -62,6 +73,14 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player") // Assuming the player has the "Player" tag
+        {
+            randomCustomerScript.mybread = false;
+            randomCustomerScript.bread.SetActive(false);
+        }
+    }
 
 
     void SetRandomRoamingPosition()
