@@ -20,7 +20,7 @@ namespace PuxxeStudio
 		public Camera popupCamera;
 		public Vector3 offset;
 
-		public float jumpForce;
+		public float jumpForce = 3f;
 		public float moveSpeed = 8f;
 
 		Rigidbody rigidbody;
@@ -61,6 +61,20 @@ namespace PuxxeStudio
 		[HideInInspector]
 		public int actionID = 0;
 		[SerializeField]
+
+		//스피드업아이템
+        private float originalMoveSpeed; // 원래 이동 속도 (15초 후 복원하기 위해 저장)
+        private float originalJumpForce;
+        private Vector3 originalScale;
+
+
+        public AudioSource source;
+        public Vector3 minScale;
+        public Vector3 maxScale;
+        public AudioLoudnessDetection detector;
+
+        public float loudnessSensibility = 100;
+        public float threshold = 0.1f;
 
 		bool animationHasLoop = false;
 		bool actionNoLoopedReturnToIdle = true;
@@ -1167,6 +1181,9 @@ namespace PuxxeStudio
 			health = 1f;
 			currentMoveAnimation = walkAnimation;
 			UpdateAnimationAction();
+			originalMoveSpeed = moveSpeed;
+            originalScale = new Vector3(0.15f, 0.15f, 0.15f);
+            originalJumpForce = jumpForce;
 		}
 
 		void Update()
@@ -1615,6 +1632,61 @@ namespace PuxxeStudio
 			Debug.Log("Restart");
 			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 		}
-	}
+
+		void OnTriggerEnter(Collider other)
+        {
+            if (other.name == "Item")// Shoe 아이템과 충돌했을 때
+            {
+                // 15초 동안 이동 속도를 변경
+                moveSpeed = 10f;
+                StartCoroutine(ResetMoveSpeedAfterDuration(15.0f)); // 15초 후 이동 속도를 복원
+                Destroy(other.gameObject); // 충돌한 Shoe 아이템 제거
+            }
+
+            else if (other.name == "ShieldItem")
+            {
+                jumpForce = 6f;
+                StartCoroutine(ResetJumpForceAfterDuration(15.0f));
+                Destroy(other.gameObject);
+                 
+
+            }
+
+            else if (other.name == "VoiceItem")// Shoe 아이템과 충돌했을 때
+            {
+                float loudness = detector.GetLoudnessFromMicrophone() * loudnessSensibility;
+                if (loudness < threshold)
+                    loudness = 0;
+
+                // Assuming you have a reference to the EnemyController script on the same GameObject
+                EnemyController enemyController = GetComponent<EnemyController>();
+
+                if (enemyController != null)
+                {
+                    // Set the IsChasing variable in the EnemyController script
+                    enemyController.isChasing = loudness > 5;
+                    transform.localScale = Vector3.Lerp(minScale, maxScale, loudness);
+
+                    // 추가: 'VoiceItem'과 충돌 처리가 완료되면 'VoiceItem'을 비활성화
+                    other.gameObject.SetActive(false);
+                }
+            }
+
+        }
+
+        IEnumerator ResetMoveSpeedAfterDuration(float duration)
+        {
+            yield return new WaitForSeconds(duration);
+            moveSpeed = originalMoveSpeed; // 원래 이동 속도로 복원
+        }
+
+
+
+		IEnumerator ResetJumpForceAfterDuration(float duration)
+		{
+			yield return new WaitForSeconds(duration);
+			jumpForce = originalJumpForce; // 원래 jumpForce로 복원
+		}
+    }
 }
 

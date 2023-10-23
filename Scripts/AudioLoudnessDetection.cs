@@ -7,13 +7,21 @@ public class AudioLoudnessDetection : MonoBehaviour
     public int sampleWindow = 64;
     private AudioClip microphoneClip;
 
-    // Start is called before the first frame update
-    void Start()
-    {
+     // Start is called before the first frame update
+     void Start()
+     {
 
-        MicrophoneToAudioClip();
-        
-    }
+             MicrophoneToAudioClip();
+
+     }
+
+   /* void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.name == "VoiceItem")
+        {
+            MicrophoneToAudioClip();
+        }
+    }*/
 
     // Update is called once per frame
     void Update()
