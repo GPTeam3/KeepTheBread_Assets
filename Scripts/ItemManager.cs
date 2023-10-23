@@ -23,6 +23,7 @@ public class ItemManager : MonoBehaviour
     public float isItemVoice_Time;
     float ItemVoice_Start;
     public GameObject Voice;
+    public GameObject sound_GO;
 
     void Start()
     {
@@ -35,6 +36,7 @@ public class ItemManager : MonoBehaviour
 
         Shield.SetActive(false);
         Voice.SetActive(false);
+        sound_GO.SetActive(false);
 
     }
 
@@ -58,6 +60,7 @@ public class ItemManager : MonoBehaviour
         {
             isItemVoice = false;
             Voice.SetActive(false);
+            sound_GO.SetActive(false);
         }
     }
     private void OnCollisionEnter(Collision collision)
@@ -91,10 +94,15 @@ public class ItemManager : MonoBehaviour
 
         if (collision.transform.CompareTag("Voice"))// Shoe 아이템과 충돌했을 때
         {
+
+
+
+
             Destroy(collision.gameObject); // 충돌한 아이템 제거
             isItemVoice = true;
             Voice.SetActive(true);
             ItemVoice_Start = Time.time;
+            sound_GO.SetActive(true);
 
             // Debug.Log("Voice");
 
