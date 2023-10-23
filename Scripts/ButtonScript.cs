@@ -12,7 +12,7 @@ public class ButtonScript : MonoBehaviour
 
     public void GameScene()
     {
-        SceneManager.LoadScene("InGame");
+        SceneManager.LoadScene("Final1");
     }
 
     public void MenuScene()

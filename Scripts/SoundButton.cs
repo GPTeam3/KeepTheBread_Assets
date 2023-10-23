@@ -7,7 +7,7 @@ using System.Collections;
 public class SoundButton : MonoBehaviour
 {
     public GameObject obj;
-    public AudioSource gamesound;
+    AudioSource gamesound;
 
     void Start()
     {
