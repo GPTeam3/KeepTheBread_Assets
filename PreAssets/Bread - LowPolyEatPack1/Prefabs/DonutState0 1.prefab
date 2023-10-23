@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7116749390288816768}
   - component: {fileID: 6155328085390230821}
-  - component: {fileID: 8253102511682712047}
+  - component: {fileID: -5637531154233301751}
   m_Layer: 0
   m_Name: DonutState0 1
   m_TagString: Untagged
@@ -41,7 +41,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7604351549532590138}
   m_Mesh: {fileID: -8009237703321839464, guid: 7bf35ca3b1194b54e9e110cffd7dbf37, type: 3}
---- !u!23 &8253102511682712047
+--- !u!23 &-5637531154233301751
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

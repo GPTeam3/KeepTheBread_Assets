@@ -545,6 +545,7 @@ MonoBehaviour:
   Shield: {fileID: 2273402789104357155}
   isItemVoice_Time: 10
   Voice: {fileID: 8552382264015003416}
+  sound_GO: {fileID: 0}
 --- !u!114 &7699675878365694881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1377,6 +1378,11 @@ MonoBehaviour:
   num3: 0
   num4: 0
   num5: 0
+  random1: 0
+  random2: 0
+  random3: 0
+  random4: 0
+  random5: 0
   bread: {fileID: 4491176134267689392}
   mybread: 0
   customer_bread: 0000000000
@@ -3126,7 +3132,7 @@ SkinnedMeshRenderer:
   m_Mesh: {fileID: -8009237703321839464, guid: 7bf35ca3b1194b54e9e110cffd7dbf37, type: 3}
   m_Bones: []
   m_BlendShapeWeights: []
-  m_RootBone: {fileID: 0}
+  m_RootBone: {fileID: 804617593733805164}
   m_AABB:
     m_Center: {x: 0, y: 0.20113611, z: 0}
     m_Extent: {x: 0.6, y: 0.2011359, z: 0.6}
