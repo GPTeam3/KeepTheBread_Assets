@@ -50,6 +50,7 @@ namespace PuxxeStudio
 		bool isDoubleJumping = false; //플레이어가 더블점프 중인지
 
 
+
 		int[] walkAnimation = { 21, 22, 23, 24 };
 		int[] runAnimation = { 31, 22, 23, 24 };
 		public int[] currentMoveAnimation = new int[4];
@@ -63,18 +64,18 @@ namespace PuxxeStudio
 		[SerializeField]
 
 		//스피드업아이템
-        private float originalMoveSpeed; // 원래 이동 속도 (15초 후 복원하기 위해 저장)
-        private float originalJumpForce;
-        private Vector3 originalScale;
+		private float originalMoveSpeed; // 원래 이동 속도 (15초 후 복원하기 위해 저장)
+		private float originalJumpForce;
+		private Vector3 originalScale;
 
 
-        public AudioSource source;
-        public Vector3 minScale;
-        public Vector3 maxScale;
-        public AudioLoudnessDetection detector;
+		public AudioSource source;
+		public Vector3 minScale;
+		public Vector3 maxScale;
+		public AudioLoudnessDetection detector;
 
-        public float loudnessSensibility = 100;
-        public float threshold = 0.1f;
+		public float loudnessSensibility = 100;
+		public float threshold = 0.1f;
 
 		bool animationHasLoop = false;
 		bool actionNoLoopedReturnToIdle = true;
@@ -1182,8 +1183,8 @@ namespace PuxxeStudio
 			currentMoveAnimation = walkAnimation;
 			UpdateAnimationAction();
 			originalMoveSpeed = moveSpeed;
-            originalScale = new Vector3(0.15f, 0.15f, 0.15f);
-            originalJumpForce = jumpForce;
+			originalScale = new Vector3(0.15f, 0.15f, 0.15f);
+			originalJumpForce = jumpForce;
 		}
 
 		void Update()
@@ -1216,7 +1217,11 @@ namespace PuxxeStudio
 
 			if (isRunning)
 			{
-				health -= 0.001f;
+				if (!ItemManager.isItemShoes)
+				{
+					health -= 0.001f;
+				}
+
 				if (currentMoveAnimation != runAnimation)
 				{
 					moveSpeed = moveSpeed * 2;
@@ -1384,7 +1389,7 @@ namespace PuxxeStudio
 		public void FindComponents()
 		{
 			rigidbody = GetComponent<Rigidbody>();
-			animator = GetComponent<Animator>();
+			// animator = GetComponent<Animator>();
 			if (animator == null)
 			{
 				animator = GetComponentInChildren<Animator>();
@@ -1602,6 +1607,7 @@ namespace PuxxeStudio
 		}
 		private void OnCollisionEnter(Collision collision)
 		{
+			Debug.Log(collision.gameObject.tag);
 			//플레이어가 땅을 밟고 있을 때
 			if (collision.transform.CompareTag("Ground"))
 			{
@@ -1633,52 +1639,12 @@ namespace PuxxeStudio
 			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 		}
 
-		void OnTriggerEnter(Collider other)
-        {
-            if (other.name == "Item")// Shoe 아이템과 충돌했을 때
-            {
-                // 15초 동안 이동 속도를 변경
-                moveSpeed = 10f;
-                StartCoroutine(ResetMoveSpeedAfterDuration(15.0f)); // 15초 후 이동 속도를 복원
-                Destroy(other.gameObject); // 충돌한 Shoe 아이템 제거
-            }
 
-            else if (other.name == "ShieldItem")
-            {
-                jumpForce = 6f;
-                StartCoroutine(ResetJumpForceAfterDuration(15.0f));
-                Destroy(other.gameObject);
-                 
-
-            }
-
-            else if (other.name == "VoiceItem")// Shoe 아이템과 충돌했을 때
-            {
-                float loudness = detector.GetLoudnessFromMicrophone() * loudnessSensibility;
-                if (loudness < threshold)
-                    loudness = 0;
-
-                // Assuming you have a reference to the EnemyController script on the same GameObject
-                EnemyController enemyController = GetComponent<EnemyController>();
-
-                if (enemyController != null)
-                {
-                    // Set the IsChasing variable in the EnemyController script
-                    enemyController.isChasing = loudness > 5;
-                    transform.localScale = Vector3.Lerp(minScale, maxScale, loudness);
-
-                    // 추가: 'VoiceItem'과 충돌 처리가 완료되면 'VoiceItem'을 비활성화
-                    other.gameObject.SetActive(false);
-                }
-            }
-
-        }
-
-        IEnumerator ResetMoveSpeedAfterDuration(float duration)
-        {
-            yield return new WaitForSeconds(duration);
-            moveSpeed = originalMoveSpeed; // 원래 이동 속도로 복원
-        }
+		IEnumerator ResetMoveSpeedAfterDuration(float duration)
+		{
+			yield return new WaitForSeconds(duration);
+			moveSpeed = originalMoveSpeed; // 원래 이동 속도로 복원
+		}
 
 
 
@@ -1687,6 +1653,6 @@ namespace PuxxeStudio
 			yield return new WaitForSeconds(duration);
 			jumpForce = originalJumpForce; // 원래 jumpForce로 복원
 		}
-    }
+	}
 }
 

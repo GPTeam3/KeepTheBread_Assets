@@ -4,21 +4,21 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    public Transform player;             // ÇÃ·¹ÀÌ¾î¸¦ µû¶ó°¡±â À§ÇÑ ÇÃ·¹ÀÌ¾îÀÇ Transform
-    public Transform grandma;            // ºñµÑ±â ÇÒ¸Ó´Ï¸¦ µû¶ó°¡±â À§ÇÑ GrandmaÀÇ Transform
-    public float moveSpeed = 3.0f;       // ÀÌµ¿ ¼Óµµ
-    public float detectionRange = 7.0f;  // ÇÃ·¹ÀÌ¾î °¨Áö ¹üÀ§
-    public float roamingRadius = 20.0f;  // ·Î¹Ö ¹Ý°æ
-    public float roamingDuration = 3.0f; // ·Î¹Ö Áö¼Ó ½Ã°£
+    public Transform player;             // ï¿½Ã·ï¿½ï¿½Ì¾î¸¦ ï¿½ï¿½ï¿½ó°¡±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ Transform
+    public Transform grandma;            // ï¿½ï¿½Ñ±ï¿½ ï¿½Ò¸Ó´Ï¸ï¿½ ï¿½ï¿½ï¿½ó°¡±ï¿½ ï¿½ï¿½ï¿½ï¿½ Grandmaï¿½ï¿½ Transform
+    public float moveSpeed = 3.0f;       // ï¿½Ìµï¿½ ï¿½Óµï¿½
+    public float detectionRange = 7.0f;  // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public float roamingRadius = 20.0f;  // ï¿½Î¹ï¿½ ï¿½Ý°ï¿½
+    public float roamingDuration = 3.0f; // ï¿½Î¹ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
 
-    private Vector3 startPosition;       // ÃÊ±â À§Ä¡
-    private bool isChasing = false;     // ÇÃ·¹ÀÌ¾î¸¦ Ãß°Ý ÁßÀÎÁö ¿©ºÎ
-    private bool grandmaChasing = false;  // grandma¸¦ Ãß°Ý ÁßÀÎÁö ¿©ºÎ
+    private Vector3 startPosition;       // ï¿½Ê±ï¿½ ï¿½ï¿½Ä¡
+    public bool isChasing = false;     // ï¿½Ã·ï¿½ï¿½Ì¾î¸¦ ï¿½ß°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    private bool grandmaChasing = false;  // grandmaï¿½ï¿½ ï¿½ß°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-    private Vector3 randomRoamingPosition; // ·Î¹Ö À§Ä¡¸¦ ÀúÀåÇÏ±â À§ÇÑ º¯¼ö
-    private float roamingTimer = 0.0f;    // ·Î¹Ö Å¸ÀÌ¸Ó
+    private Vector3 randomRoamingPosition; // ï¿½Î¹ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    private float roamingTimer = 0.0f;    // ï¿½Î¹ï¿½ Å¸ï¿½Ì¸ï¿½
 
-    private RandomCustomer randomCustomerScript; // RandomCustomer ½ºÅ©¸³Æ® ÂüÁ¶
+    private RandomCustomer randomCustomerScript; // RandomCustomer ï¿½ï¿½Å©ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
 
     void Start()
     {
@@ -27,7 +27,7 @@ public class EnemyController : MonoBehaviour
         startPosition = transform.position;
         SetRandomRoamingPosition();
 
-        // BreadCheck ¿ÀºêÁ§Æ®¸¦ Ã£¾Æ¼­ ±× ¾Æ·¡¿¡ ÀÖ´Â RandomCustomer ½ºÅ©¸³Æ®¸¦ °¡Á®¿Àµµ·Ï ¼öÁ¤
+        // BreadCheck ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ Ã£ï¿½Æ¼ï¿½ ï¿½ï¿½ ï¿½Æ·ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ RandomCustomer ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         GameObject breadCheckObject = player.Find("BreadCheck").gameObject;
         randomCustomerScript = breadCheckObject.GetComponent<RandomCustomer>();
     }
@@ -37,25 +37,25 @@ public class EnemyController : MonoBehaviour
         float distanceToGrandma = Vector3.Distance(transform.position, grandma.position);
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-        if (enabled) // Enemy°¡ È°¼ºÈ­µÈ °æ¿ì¿¡¸¸ ½ÇÇà
+        if (enabled) // Enemyï¿½ï¿½ È°ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ì¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         {
-            // Player¿Í GrandmaÀÇ À§Ä¡ °ü·Ã °Å¸® °è»ê
-            bool playerInRange = distanceToPlayer <= detectionRange && randomCustomerScript.mybread == true;
+            // Playerï¿½ï¿½ Grandmaï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½
+            bool playerInRange = distanceToPlayer <= detectionRange && randomCustomerScript.mybread && !ItemManager.isItemShield && CheckSound.isSoundLoud == true;
             bool grandmaInRange = distanceToGrandma <= detectionRange;
 
             if (playerInRange && !grandmaInRange)
             {
-                // Player¸¸ °¨ÁöµÇ¾úÀ» ¶§ ÇÃ·¹ÀÌ¾î ÃßÀû
+                // Playerï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½
                 isChasing = true;
                 grandmaChasing = false;
 
-                // ¹Ù¶óº¸´Â ·ÎÁ÷
+                // ï¿½Ù¶óº¸´ï¿½ ï¿½ï¿½ï¿½ï¿½
                 Vector3 lookDirection = (player.position - transform.position).normalized;
                 transform.forward = lookDirection;
             }
             else if (!playerInRange && grandmaInRange)
             {
-                // Grandma¸¸ °¨ÁöµÇ¾úÀ» ¶§ Grandma ÃßÀû
+                // Grandmaï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½ï¿½ ï¿½ï¿½ Grandma ï¿½ï¿½ï¿½ï¿½
                 isChasing = false;
                 grandmaChasing = true;
 
@@ -64,7 +64,7 @@ public class EnemyController : MonoBehaviour
             }
             else if (playerInRange && grandmaInRange)
             {
-                // Player¿Í Grandma ¸ðµÎ °¨ÁöµÇ¾úÀ» ¶§ Player ÃßÀû
+                // Playerï¿½ï¿½ Grandma ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½ï¿½ ï¿½ï¿½ Player ï¿½ï¿½ï¿½ï¿½
                 isChasing = true;
                 grandmaChasing = false;
 
@@ -73,7 +73,7 @@ public class EnemyController : MonoBehaviour
             }
             else
             {
-                // ¸ðµÎ °¨Áö ¹üÀ§¿¡ µé¾î¿ÀÁö ¾ÊÀ» ¶§ ·£´ý ·Î¹Ö
+                // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Î¹ï¿½
                 isChasing = false;
                 grandmaChasing = false;
                 Vector3 moveDirection = (randomRoamingPosition - transform.position).normalized;
@@ -81,7 +81,7 @@ public class EnemyController : MonoBehaviour
                 Roam();
             }
 
-            if (isChasing) // ÂÑ¾Æ°¡´Â ·ÎÁ÷
+            if (isChasing) // ï¿½Ñ¾Æ°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             {
                 PlayerChasing();
 
@@ -103,7 +103,7 @@ public class EnemyController : MonoBehaviour
             }
             else
             {
-                // ÃßÀû ÁßÀÌ ¾Æ´Ò ¶§µµ ÀÌµ¿ ¹æÇâÀ¸·Î ¾ó±¼À» ¸ÂÃß±â
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ß±ï¿½
                 Vector3 moveDirection = (randomRoamingPosition - transform.position).normalized;
                 transform.forward = moveDirection;
                 Roam();
@@ -121,7 +121,7 @@ public class EnemyController : MonoBehaviour
     {
         float distanceToGrandma = Vector3.Distance(transform.position, grandma.position);
 
-        // Grandma¿ÍÀÇ °Å¸®°¡ ÀÏÁ¤ °ª ÀÌ»óÀÎ °æ¿ì¿¡¸¸ Grandma¸¦ ÃßÀû
+        // Grandmaï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ì»ï¿½ï¿½ï¿½ ï¿½ï¿½ì¿¡ï¿½ï¿½ Grandmaï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (distanceToGrandma > 0.5f)
         {
             Vector3 moveDirection = (grandma.position - transform.position).normalized;
@@ -135,6 +135,8 @@ public class EnemyController : MonoBehaviour
         {
             randomCustomerScript.mybread = false;
             randomCustomerScript.bread.SetActive(false);
+
+
         }
     }
 
