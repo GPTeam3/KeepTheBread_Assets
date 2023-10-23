@@ -25,6 +25,12 @@ public class RandomCustomer : MonoBehaviour
     public int num4;
     public int num5;
 
+    public int random1;
+    public int random2;
+    public int random3;
+    public int random4;
+    public int random5;
+
     public GameObject bread;
     public bool mybread = false;
     public bool[] customer_bread;
@@ -36,11 +42,11 @@ public class RandomCustomer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        num1 = Random.Range(0, 5);
-        num2 = Random.Range(0, 4);
-        num3 = Random.Range(0, 49);
-        num4 = Random.Range(0, 5);
-        num5 = Random.Range(0, 5);
+        num1 = Random.Range(0, random1);
+        num2 = Random.Range(0, random2);
+        num3 = Random.Range(0, random3);
+        num4 = Random.Range(0, random4);
+        num5 = Random.Range(0, random5);
 
         MCCustomer[num1].customer[0].SetActive(false);
         MCCustomer[num1].customer[1].SetActive(true);
