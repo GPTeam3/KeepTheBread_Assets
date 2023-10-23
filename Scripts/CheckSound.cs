@@ -24,8 +24,9 @@ public class CheckSound : MonoBehaviour
     {
         float loudness = detector.GetLoudnessFromMicrophone() * loudnessSensibility;
 
-        if (loudness > 1f)
+        if (ItemManager.isItemVoice && loudness > 10f)
         {
+
             isSoundLoud = true;
         }
         else

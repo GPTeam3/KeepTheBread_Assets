@@ -1607,7 +1607,7 @@ namespace PuxxeStudio
 		}
 		private void OnCollisionEnter(Collision collision)
 		{
-			Debug.Log(collision.gameObject.tag);
+			// Debug.Log(collision.gameObject.tag);
 			//플레이어가 땅을 밟고 있을 때
 			if (collision.transform.CompareTag("Ground"))
 			{

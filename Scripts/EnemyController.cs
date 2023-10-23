@@ -40,7 +40,7 @@ public class EnemyController : MonoBehaviour
         if (enabled) // Enemy�� Ȱ��ȭ�� ��쿡�� ����
         {
             // Player�� Grandma�� ��ġ ���� �Ÿ� ���
-            bool playerInRange = distanceToPlayer <= detectionRange && randomCustomerScript.mybread && !ItemManager.isItemShield && CheckSound.isSoundLoud == true;
+            bool playerInRange = distanceToPlayer <= detectionRange && randomCustomerScript.mybread && !ItemManager.isItemShield && !CheckSound.isSoundLoud == true;
             bool grandmaInRange = distanceToGrandma <= detectionRange;
 
             if (playerInRange && !grandmaInRange)
