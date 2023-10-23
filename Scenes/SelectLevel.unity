@@ -323,6 +323,7 @@ MonoBehaviour:
   - 0
   - 0
   - 0
+  level: 0
 --- !u!1 &290668283
 GameObject:
   m_ObjectHideFlags: 0
@@ -376,6 +377,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0853f44bd15a4290ba0009b523e70a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  score: {fileID: 0}
 --- !u!114 &290668286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -422,7 +424,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 290668285}
         m_TargetAssemblyTypeName: ButtonScript, Assembly-CSharp
-        m_MethodName: GameScene
+        m_MethodName: GameScene1
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1547,7 +1549,7 @@ RectTransform:
   - {fileID: 617439480}
   - {fileID: 412991298}
   m_Father: {fileID: 1905582390}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1692,7 +1694,7 @@ RectTransform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1905582390}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1768,7 +1770,7 @@ Transform:
   - {fileID: 8819687962539608918}
   - {fileID: 1830277676}
   m_Father: {fileID: 1905582390}
-  m_RootOrder: 9
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1830277675
 GameObject:
@@ -1782,6 +1784,7 @@ GameObject:
   - component: {fileID: 1830277679}
   - component: {fileID: 1830277678}
   - component: {fileID: 1830277677}
+  - component: {fileID: 1830277680}
   m_Layer: 5
   m_Name: Level3
   m_TagString: Untagged
@@ -1853,7 +1856,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1830277678}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1830277680}
+        m_TargetAssemblyTypeName: ButtonScript, Assembly-CSharp
+        m_MethodName: GameScene3
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1830277678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1892,6 +1907,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1830277675}
   m_CullTransparentMesh: 0
+--- !u!114 &1830277680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1830277675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0853f44bd15a4290ba0009b523e70a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  score: {fileID: 0}
 --- !u!1 &1860974383
 GameObject:
   m_ObjectHideFlags: 0
@@ -2065,6 +2093,7 @@ RectTransform:
   m_Children:
   - {fileID: 1860974384}
   - {fileID: 290668284}
+  - {fileID: 1821308709}
   - {fileID: 2087927425}
   - {fileID: 8819687963095188069}
   - {fileID: 8819687962903771421}
@@ -2072,7 +2101,6 @@ RectTransform:
   - {fileID: 2011047375}
   - {fileID: 1479313414}
   - {fileID: 2036837402046031942}
-  - {fileID: 1821308709}
   - {fileID: 495103748}
   - {fileID: 2089186212}
   m_Father: {fileID: 0}
@@ -2252,7 +2280,7 @@ RectTransform:
   m_Children:
   - {fileID: 251913204}
   m_Father: {fileID: 1905582390}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -2331,7 +2359,7 @@ RectTransform:
   - {fileID: 1281210137}
   - {fileID: 1131539244}
   m_Father: {fileID: 1905582390}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2639,7 +2667,7 @@ RectTransform:
   m_Children:
   - {fileID: 5366634852947983700}
   m_Father: {fileID: 1905582390}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2840,6 +2868,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0853f44bd15a4290ba0009b523e70a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  score: {fileID: 0}
 --- !u!224 &8819687962015878848
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3004,6 +3033,7 @@ GameObject:
   - component: {fileID: 8819687962539608937}
   - component: {fileID: 8819687962539608936}
   - component: {fileID: 8819687962539608919}
+  - component: {fileID: 8819687962539608938}
   m_Layer: 5
   m_Name: Level2
   m_TagString: Untagged
@@ -3075,7 +3105,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8819687962539608936}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8819687962539608938}
+        m_TargetAssemblyTypeName: ButtonScript, Assembly-CSharp
+        m_MethodName: GameScene2
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &8819687962539608936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3114,6 +3156,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8819687962539608917}
   m_CullTransparentMesh: 0
+--- !u!114 &8819687962539608938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8819687962539608917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0853f44bd15a4290ba0009b523e70a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  score: {fileID: 0}
 --- !u!1 &8819687962903771420
 GameObject:
   m_ObjectHideFlags: 0
@@ -3146,7 +3201,7 @@ RectTransform:
   m_Children:
   - {fileID: 8819687963315229144}
   m_Father: {fileID: 1905582390}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -3301,7 +3356,7 @@ RectTransform:
   - {fileID: 8819687963052039111}
   - {fileID: 8819687962443485835}
   m_Father: {fileID: 1905582390}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

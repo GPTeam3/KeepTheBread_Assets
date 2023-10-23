@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameScore : MonoBehaviour
 {
     public float[] time;  //각 레벨 별로 남은 시간 저장
+    public int level;
 
     private void    Awake()
     {

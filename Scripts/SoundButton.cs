@@ -12,9 +12,6 @@ public class SoundButton : MonoBehaviour
     void Start()
     {
         gamesound = obj.GetComponent<AudioSource>();
-        gamesound.Play();
-
-        gamesound.volume = 1.0f;
         gamesound.loop = true;
     }
 
