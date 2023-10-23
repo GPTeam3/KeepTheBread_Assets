@@ -38,6 +38,7 @@ public class RandomCustomer : MonoBehaviour
     public int count = 0;
 
     public GameObject GameClear;
+    int level;
 
     // Start is called before the first frame update
     void Start()
@@ -78,16 +79,18 @@ public class RandomCustomer : MonoBehaviour
         customer_bread[2] = false;
         customer_bread[3] = false;
         customer_bread[4] = false;
+
+        level = GameObject.Find("GameScore").GetComponent<GameScore>().level;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (count == 5)
+        if (count == 1)
         {
             GameClear.SetActive(true);
-            if (GameObject.Find("GameScore").GetComponent<GameScore>().time[0] < GameObject.Find("Canvas").GetComponent<Timer>().time)
-                GameObject.Find("GameScore").GetComponent<GameScore>().time[0] = GameObject.Find("Canvas").GetComponent<Timer>().time;
+            if (GameObject.Find("GameScore").GetComponent<GameScore>().time[level] < GameObject.Find("Canvas").GetComponent<Timer>().time)
+                GameObject.Find("GameScore").GetComponent<GameScore>().time[level] = GameObject.Find("Canvas").GetComponent<Timer>().time;
             // IsPause = true;
             Time.timeScale = 0;
         }

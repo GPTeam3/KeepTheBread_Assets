@@ -35,13 +35,13 @@ public class StarLevel : MonoBehaviour
 
         if (GameObject.Find("GameScore").GetComponent<GameScore>().time[0] != 0)
         {
-            if (GameObject.Find("GameScore").GetComponent<GameScore>().time[0] >= 290)
+            if (GameObject.Find("GameScore").GetComponent<GameScore>().time[0] >= 120)
             {
                 Level1_star[0].SetActive(true);
                 Level1_star[1].SetActive(true);
                 Level1_star[2].SetActive(true);
             }
-            else if(GameObject.Find("GameScore").GetComponent<GameScore>().time[0] >= 280)
+            else if(GameObject.Find("GameScore").GetComponent<GameScore>().time[0] >= 60)
             {
                 Level1_star[0].SetActive(true);
                 Level1_star[1].SetActive(true);
@@ -57,15 +57,18 @@ public class StarLevel : MonoBehaviour
         {
             if (GameObject.Find("GameScore").GetComponent<GameScore>().time[1] >= 120)
             {
-
+                Level2_star[0].SetActive(true);
+                Level2_star[1].SetActive(true);
+                Level2_star[2].SetActive(true);
             }
             else if(GameObject.Find("GameScore").GetComponent<GameScore>().time[1] >= 60)
             {
-
+                Level2_star[0].SetActive(true);
+                Level2_star[1].SetActive(true);
             }
             else
             {
-                
+                Level2_star[0].SetActive(true);
             }
             Button_3.SetActive(true);
             Lock_3.SetActive(false);
@@ -74,15 +77,18 @@ public class StarLevel : MonoBehaviour
         {
             if (GameObject.Find("GameScore").GetComponent<GameScore>().time[2] >= 120)
             {
-
+                Level3_star[0].SetActive(true);
+                Level3_star[1].SetActive(true);
+                Level3_star[2].SetActive(true);
             }
             else if(GameObject.Find("GameScore").GetComponent<GameScore>().time[2] >= 60)
             {
-
+                Level3_star[0].SetActive(true);
+                Level3_star[1].SetActive(true);
             }
             else
             {
-                
+                Level3_star[0].SetActive(true);
             }
         }
     }
