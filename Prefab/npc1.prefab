@@ -95,7 +95,7 @@ MonoBehaviour:
   player: {fileID: 0}
   moveSpeed: 1
   roamingRadius: 300
-  roamingDuration: 3
+  roamingDuration: 6
 --- !u!114 &3002310529622117799
 MonoBehaviour:
   m_ObjectHideFlags: 0
