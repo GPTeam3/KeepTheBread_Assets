@@ -93,8 +93,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   moveSpeed: 1
-  roamingRadius: 20
-  roamingDuration: 3
+  roamingRadius: 300
+  roamingDuration: 6
 --- !u!1001 &4879094727121584202
 PrefabInstance:
   m_ObjectHideFlags: 0

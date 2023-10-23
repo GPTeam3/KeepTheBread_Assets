@@ -94,7 +94,7 @@ MonoBehaviour:
   player: {fileID: 0}
   moveSpeed: 2
   roamingRadius: 300
-  roamingDuration: 3
+  roamingDuration: 6
 --- !u!1001 &544860429913876445
 PrefabInstance:
   m_ObjectHideFlags: 0

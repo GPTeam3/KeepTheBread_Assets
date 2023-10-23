@@ -1118,7 +1118,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  moveSpeed: 5
+  grandma: {fileID: 0}
+  moveSpeed: 2
   detectionRange: 5
   roamingRadius: 300
   roamingDuration: 3
